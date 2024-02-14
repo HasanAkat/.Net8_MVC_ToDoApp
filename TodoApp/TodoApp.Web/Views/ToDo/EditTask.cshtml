@@ -1,0 +1,29 @@
+﻿@model TodoApp.Web.Models.Entities.Task
+
+<h2>Edit Task</h2>
+
+<form asp-action="EditTask" asp-route-id="@Model.TaskID" method="post">
+    <div class="form-group">
+        <label asp-for="TaskTitle" class="control-label">Task Title:</label>
+        <input asp-for="TaskTitle" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="TaskContext" class="control-label">Task Context:</label>
+        <textarea asp-for="TaskContext" class="form-control"></textarea>
+    </div>
+    <div class="form-group">
+        <label asp-for="IsCompleted" class="control-label">Is Completed:</label>
+        <input asp-for="IsCompleted" type="checkbox" />
+    </div>
+    <div class="form-group">
+        <label asp-for="CategoryID" class="control-label">Category:</label>
+        <select asp-for="CategoryID" asp-items="ViewBag.Categories" class="form-control">
+            <option value="">-- Select Category --</option>
+        </select>
+    </div>
+    <input asp-for="TaskID" type="hidden" />
+    <div class="form-group">
+        <button type="submit" name="submitButton" value="save" class="btn btn-primary">Save Changes</button>
+        <button type="submit" name="submitButton" value="delete" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this task?');">Delete Task</button>
+    </div>
+</form>

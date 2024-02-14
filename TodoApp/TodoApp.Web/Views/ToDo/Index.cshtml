@@ -1,0 +1,50 @@
+﻿@model TodoApp.Web.Models.IndexViewModel
+
+<h2>Tasks</h2>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="form-group">
+            <label asp-for="SelectedCategory" class="control-label">Filter by Category:</label>
+            <select asp-for="SelectedCategory" asp-items="@(new SelectList(Model.Categories, "CategoryID", "CategoryName"))" class="form-control" onchange="location.href = '/ToDo/Index?category=' + this.value;">
+                <option value="">-- All Categories --</option>
+            </select>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label asp-for="IsCompletedFilter" class="control-label">Filter by Completion Status:</label>
+            <select asp-for="IsCompletedFilter" class="form-control" onchange="location.href = '/ToDo/Index?category=@Model.SelectedCategory&isCompleted=' + this.value;">
+                <option value="">-- All Tasks --</option>
+                <option value="True">Completed</option>
+                <option value="False">Not Completed</option>
+            </select>
+        </div>
+    </div>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Task Title</th>
+            <th>Task Context</th>
+            <th>Is Completed</th>
+            <th>Category</th>
+            <th>Edit</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var task in Model.Tasks)
+        {
+            <tr>
+                <td>@task.TaskTitle</td>
+                <td>@task.TaskContext</td>
+                <td>@(task.IsCompleted ? "Yes" : "No")</td>
+                <td>@task.CategoryName</td>
+                <td>
+                    <a asp-action="EditTask" asp-route-id="@task.TaskID">Edit</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
